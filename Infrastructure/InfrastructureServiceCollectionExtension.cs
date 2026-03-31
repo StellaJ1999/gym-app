@@ -1,5 +1,7 @@
-﻿using Infrastructure.Persistence.Extensions;
+﻿using Application.Abstractions.Support;
 using Infrastructure.Identity.Extensions;
+using Infrastructure.Persistence.Extensions;
+using Infrastructure.Persistence.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -14,8 +16,16 @@ public static class InfrastructureServiceCollectionExtension
         ArgumentNullException.ThrowIfNull(configuration);
         ArgumentNullException.ThrowIfNull(environment);
 
+        // Registrerar PersistenceContext och väljer provider, InMemory i dev om det är aktiverat annars SQL Server.
         services.AddPersistence(configuration, environment);
+
+        // Registrerar ASP.NET Core Identity som använder samma DbContext.
         services.AddIdentity(configuration, environment);
+
+        // Kopplar Application-kontraktet till Infrastructure-implementationen.
+        // ContactRequestService anropar IContactRequestRepository och kommer via DI få ContactRequestRepository.
+        services.AddScoped<IContactRequestRepository, ContactRequestRepository>();
+
         return services;
     }
 }

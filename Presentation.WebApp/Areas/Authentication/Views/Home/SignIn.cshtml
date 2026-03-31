@@ -1,3 +1,41 @@
 ﻿@{
     ViewData["Title"] = "Sign In";
 }
+
+@model Presentation.WebApp.Areas.Authentication.Models.SignInForm
+
+<section class="_auth">
+    <div>
+        <h1 class="title">Sign In</h1>
+        <p class="description">Sign in to continue your fitness journey.</p>
+    </div>
+
+    <hr />
+
+    <form class="signin-form" method="post" asp-area="Authentication" asp-controller="Home" asp-action="SignIn" novalidate>
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <label class="form-label" asp-for="Email"></label>
+            <input class="form-input" asp-for="Email" />
+            <span asp-validation-for="Email" class="field-validation"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" asp-for="Password"></label>
+            <input class="form-input" asp-for="Password" />
+            <span asp-validation-for="Password" class="field-validation"></span>
+        </div>
+
+        <div class="form-group form-checkbox-group">
+            <input class="form-checkbox" asp-for="RememberMe" />
+            <label class="form-label" asp-for="RememberMe"></label>
+        </div>
+
+        <button class="btn" type="submit">Sign In</button>
+
+        <div class="form-errormessage">
+            <span class="field-validation-error" asp-validation-for="ErrorMessage"></span>
+        </div>
+    </form>
+</section>

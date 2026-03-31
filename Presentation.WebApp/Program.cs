@@ -1,6 +1,8 @@
+using Application.Abstractions.Support;
+using Application.Extensions;
+using Application.Support.Services;
 using Infrastructure;
 using Presentation.WebApp.Services;
-using Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,8 @@ builder.Services.AddApplication(builder.Configuration, builder.Environment);
 builder.Services.AddSession();
 
 builder.Services.AddScoped<IFaqService, FaqService>();
+builder.Services.AddScoped<IContactRequestService, ContactRequestService>();
+
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRouting(x => x.LowercaseUrls = true);

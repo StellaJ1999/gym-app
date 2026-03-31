@@ -399,6 +399,8 @@ form {
 
     .form-checkbox-group {
         display: flex;
+        align-items: center;
+        gap: 0.5rem;
     }
 
     .form-label {
@@ -518,6 +520,33 @@ form {
         justify-content: center;
         align-items: center;
         height: 50px;
+    }
+
+    .signin-form .form-group {
+        min-width: 400px;
+        gap: 0.2rem;
+        margin: 0 0 0.75rem;
+    }
+
+    .signin-form .field-validation {
+        height: 16px;
+    }
+
+    .signin-form .form-errormessage {
+        height: 28px;
+    }
+
+    .form-checkbox-group .form-label {
+        font-family: var(--font-default);
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: var(--form-label-text-color);
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    [data-type="terms"] {
+        margin-top: 1rem;
     }
 }
 

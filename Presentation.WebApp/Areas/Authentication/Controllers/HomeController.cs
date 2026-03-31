@@ -64,4 +64,28 @@ public class HomeController(IAuthService authService) : Controller
 
         return Redirect("/me");
     }
+
+    [HttpGet("sign-in")]
+    public IActionResult SignIn()
+    {
+        return View();
+    }
+
+    [HttpPost("sign-in")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> SignIn(SignInForm form)
+    {
+        if (!ModelState.IsValid)
+            return View(form);
+
+        var result = await authService.SignInUserAsync(form.Email, form.Password, form.RememberMe);
+
+        if (!result.Succeeded)
+        {
+            ModelState.AddModelError(nameof(form.ErrorMessage), result.ErrorMessage ?? "Invalid email or password.");
+            return View(form);
+        }
+
+        return Redirect("/me");
+    }
 }
