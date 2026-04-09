@@ -1,4 +1,5 @@
 ﻿using Domain.Support;
+using Domain.Training;
 using Infrastructure.Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -14,7 +15,9 @@ public class PersistenceContext(DbContextOptions<PersistenceContext> options)
     // DbSet behövs för att EF Core ska förstå att ContactRequest ska bli en tabell i databasen.
     // Utan DbSet (och migration) kommer inget ContactRequests-table att skapas och inget kan sparas.
     public DbSet<ContactRequest> ContactRequests => Set<ContactRequest>();
-    
+    public DbSet<TrainingSession> TrainingSessions => Set<TrainingSession>();
+    public DbSet<TrainingSessionBooking> TrainingSessionBookings => Set<TrainingSessionBooking>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
        

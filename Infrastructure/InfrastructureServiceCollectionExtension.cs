@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions.Support;
+using Application.Abstractions.Training;
 using Infrastructure.Identity.Extensions;
 using Infrastructure.Persistence.Extensions;
 using Infrastructure.Persistence.Repositories;
@@ -25,6 +26,9 @@ public static class InfrastructureServiceCollectionExtension
         // Kopplar Application-kontraktet till Infrastructure-implementationen.
         // ContactRequestService anropar IContactRequestRepository och kommer via DI få ContactRequestRepository.
         services.AddScoped<IContactRequestRepository, ContactRequestRepository>();
+
+        services.AddScoped<ITrainingSessionRepository, TrainingSessionRepository>();
+        services.AddScoped<ITrainingSessionBookingRepository, TrainingSessionBookingRepository>();
 
         return services;
     }

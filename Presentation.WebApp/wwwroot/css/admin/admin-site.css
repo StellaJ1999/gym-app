@@ -41,3 +41,25 @@ header {
 .admin-menu {
     height: 100%;
 }
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .admin-table th,
+    .admin-table td {
+        text-align: left;
+        padding: 0.5rem;
+    }
+
+.admin-table__actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.admin-table__inline-form {
+    display: inline;
+    margin: 0;
+}

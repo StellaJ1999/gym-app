@@ -45,7 +45,6 @@
                 <div data-type="submit" class="form-group">
                     <button class="btn" type="submit">Submit Message</button>
 
-                    @* Renderas bara efter en submit (redirect) när TempData finns, och är borta vid refresh *@
                     @if (!string.IsNullOrWhiteSpace(statusMessage))
                     {
                         <span class="contact-form-status" aria-live="polite">@statusMessage</span>

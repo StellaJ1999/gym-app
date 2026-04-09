@@ -1,0 +1,49 @@
+﻿@model IReadOnlyList<TrainingSessionListItemViewModel>
+
+
+<div class="container">
+    @if (Model is null || Model.Count == 0)
+    {
+        <p>No sessions available.</p>
+    }
+    else
+    {
+        <div class="training-session-list">
+            @foreach (var item in Model)
+            {
+                var stateClass = item.IsBooked ? "training-session-card--booked" : (item.IsFull ? "training-session-card--full" : string.Empty);
+
+                <div class="training-session-card @stateClass">
+                    <h3 class="training-session-card__title">@item.Session.Name</h3>
+
+                    <div class="training-session-card__meta">
+                        <strong>Starts:</strong> @item.Session.StartTime<br />
+                        <strong>Ends:</strong> @item.Session.EndTime<br />
+                        <strong>Spots:</strong> @item.BookedCount / @item.Session.MaxParticipants
+                    </div>
+
+                    <div class="training-session-card__actions">
+                        @if (item.IsBooked)
+                        {
+                            <form asp-controller="Training" asp-action="Cancel" asp-route-id="@item.Session.Id" method="post">
+                                @Html.AntiForgeryToken()
+                                <button class="btn" type="submit">Cancel booking</button>
+                            </form>
+                        }
+                        else if (item.IsFull)
+                        {
+                            <button class="btn" type="button" disabled>Full</button>
+                        }
+                        else
+                        {
+                            <form asp-controller="Training" asp-action="Book" asp-route-id="@item.Session.Id" method="post">
+                                @Html.AntiForgeryToken()
+                                <button class="btn accent" type="submit">Book</button>
+                            </form>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

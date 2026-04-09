@@ -1,0 +1,25 @@
+@model Presentation.WebApp.Areas.Admin.Models.TrainingSessionForm
+
+<div class="form-group">
+    <label class="form-label" asp-for="Name"></label>
+    <input class="form-input" asp-for="Name" />
+    <span class="form-errormessage" asp-validation-for="Name"></span>
+</div>
+
+<div class="form-group">
+    <label class="form-label" asp-for="StartTime"></label>
+    <input class="form-input" asp-for="StartTime" type="datetime-local" />
+    <span class="form-errormessage" asp-validation-for="StartTime"></span>
+</div>
+
+<div class="form-group">
+    <label class="form-label" asp-for="EndTime"></label>
+    <input class="form-input" asp-for="EndTime" type="datetime-local" />
+    <span class="form-errormessage" asp-validation-for="EndTime"></span>
+</div>
+
+<div class="form-group">
+    <label class="form-label" asp-for="MaxParticipants"></label>
+    <input class="form-input" asp-for="MaxParticipants" type="number" min="1" />
+    <span class="form-errormessage" asp-validation-for="MaxParticipants"></span>
+</div>

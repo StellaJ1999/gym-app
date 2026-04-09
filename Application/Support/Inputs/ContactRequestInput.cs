@@ -1,5 +1,8 @@
 ﻿namespace Application.Support.Inputs;
 
+// Denna record används som input när en användare skickar in en kontaktförfrågan via ett formulär på webbplatsen.
+// Den innehåller de fält som användaren fyller i,
+// samt Id och CreatedAt som sätts av applikationslagret för att säkerställa att dessa alltid är korrekt ifyllda när de sparas i databasen.
 public sealed record ContactRequestInput
 (
     string FirstName,

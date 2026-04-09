@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Presentation.WebApp.Controllers.Admin
-{
-    public class AdminDashboardController : Controller
+namespace Presentation.WebApp.Controllers.Admin;
+
+[Area("Admin")]
+[Authorize(Roles = "Admin")]
+[Route("admin")]
+public class AdminDashboardController : Controller
+{   
+    public IActionResult Index()
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        return RedirectToAction(actionName: "Dashboard", controllerName: "Admin", routeValues: new { area = "Admin" });
     }
 }

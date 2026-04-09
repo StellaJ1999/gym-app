@@ -31,7 +31,6 @@ public static class IdentityServiceCollectionExtension
             var logoutPath = configuration?.GetValue<string>("CookieSettings:LogoutPath") ?? "/sign-out";
             var accessDeniedPath = configuration?.GetValue<string>("CookieSettings:DeniedPath") ?? "/access-denied";
             var cookieName = configuration?.GetValue<string>("CookieSettings:CookieName") ?? "MyAppCookie";
-            var MaxAgeInDays = configuration?.GetValue<int>("CookieSettings:MaxAgeInDays") ?? 90;
             var ExpiresInDays = configuration?.GetValue<int>("CookieSettings:ExpiresInDays") ?? 30;
 
             x.LoginPath = loginPath;
@@ -39,7 +38,7 @@ public static class IdentityServiceCollectionExtension
             x.AccessDeniedPath = accessDeniedPath;
             x.Cookie.Name = cookieName;
             x.Cookie.IsEssential = true;
-            x.Cookie.MaxAge = TimeSpan.FromDays(MaxAgeInDays);
+    
             x.ExpireTimeSpan = TimeSpan.FromDays(ExpiresInDays);
         });
 

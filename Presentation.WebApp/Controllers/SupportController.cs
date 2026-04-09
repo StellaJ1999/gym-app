@@ -43,6 +43,8 @@ public class SupportController : Controller
             form.Message
         );
 
+        // Anropar Application-lagret via service interfacet.
+        // Controllern har ingen kunskap om hur det är implementerat, bara att det finns en metod som tar ett input-objekt och returnerar en bool.
         var ok = await _contactRequestService.CreateContactRequestAsync(input);
 
         // Detta är den text visas under knappen efter att POST:en är klar.

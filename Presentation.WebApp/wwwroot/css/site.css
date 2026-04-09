@@ -627,6 +627,67 @@ form {
     }
 }
 
+/* reusable card styling (used by account/admin forms and similar sections) */
+.form-card {
+    background-color: var(--section-background-color);
+    padding: 1rem 4rem 2rem;
+    margin-bottom: 2rem;
+    border-radius: 20px;
+
+    @media (width < 768px) {
+        padding: 1rem 1.5rem 1.5rem;
+    }
+
+    hr {
+        opacity: 0.1;
+        margin: 1rem 0;
+    }
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* training sessions (cards) */
+.training-session-list {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.training-session-card {
+    padding: 1.25rem;
+    border: 1px solid rgba(39, 37, 47, 0.12);
+    border-radius: 20px;
+    background-color: var(--section-background-color);
+}
+
+.training-session-card--booked {
+    border-color: var(--border-accent-color);
+}
+
+.training-session-card--full {
+    opacity: 0.75;
+}
+
+.training-session-card__title {
+    margin: 0;
+}
+
+.training-session-card__meta {
+    margin-top: 0.75rem;
+    line-height: 1.5;
+}
+
+.training-session-card__actions {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
 /* header section */ 
 .section__header {
     display: grid;

@@ -1,32 +1,86 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Application.Abstractions.Training;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.WebApp.Models;
+using System.Security.Claims;
 
 namespace Presentation.WebApp.Controllers;
 
 [Route("training")]
 public class TrainingController : Controller
 {
-    [HttpGet("group-training")]
-    [AllowAnonymous]
-    public IActionResult GroupTraining()
+    private readonly ITrainingSessionService? _sessions;
+    private readonly ITrainingSessionBookingService? _bookings;
+
+    public TrainingController(ITrainingSessionService sessions, ITrainingSessionBookingService bookings)
     {
-        ViewData["Title"] = "Group Training";
-        return View();
+        _sessions = sessions;
+        _bookings = bookings;
     }
 
-    [HttpGet("personal-traineer")]
-    [AllowAnonymous]
-    public IActionResult PersonalTraineer()
+    [HttpGet("")]
+    [Authorize(Roles = "Admin,User")]
+    public async Task<IActionResult> Index()
     {
-        ViewData["Title"] = "Personal Training";
-        return View();
+        ViewData["Title"] = "Training";
+
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrWhiteSpace(userId))
+            return Challenge();
+
+        var sessions = await _sessions.GetAllTrainingSessionsAsync();
+        var bookedIds = await _bookings.GetBookingsForUserAsync(userId);
+
+        var model = sessions
+            .Select(s =>
+            {
+                var bookedCount = s.Bookings.Count;
+                var isFull = bookedCount >= s.MaxParticipants;
+                var isBooked = bookedIds.Contains(s.Id);
+
+                return new TrainingSessionListItemViewModel(
+                    Session: s,
+                    IsBooked: isBooked,
+                    BookedCount: bookedCount,
+                    IsFull: isFull
+                );
+            })
+            .ToList();
+
+        return View(model);
     }
 
-    [HttpGet("online-coaching")]
-    [AllowAnonymous]
-    public IActionResult OnlineCoaching()
+    [HttpPost("book/{id:guid}")]
+    [Authorize(Roles = "Admin,User")]
+    [ValidateAntiForgeryToken]
+
+    public async Task<IActionResult> Book(Guid id)
     {
-        ViewData["Title"] = "Online Coaching";
-        return View();
+        // För att boka en session måste vi veta vem som bokar, så vi hämtar userId från claims.
+        // Om det inte finns någon userId så uppmanar vi användaren att logga in.
+
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrWhiteSpace(userId))
+            return Challenge();
+
+        var ok = await _bookings.BookAsync(id, userId);
+        TempData["Message"] = ok ? "Booked." : "Could not book (maybe full or already booked).";
+
+        return RedirectToAction(nameof(Index));
+    }
+
+     [HttpPost("cancel/{id:guid}")]
+     [Authorize(Roles = "Admin,User")]
+     [ValidateAntiForgeryToken]
+     public async Task<IActionResult> Cancel(Guid id)
+     {
+         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+         if (string.IsNullOrWhiteSpace(userId))
+             return Challenge();
+
+        var ok = await _bookings.CancelBookingAsync(id, userId);
+        TempData["Message"] = ok ? "Booking canceled." : "Could not cancel booking.";
+
+        return RedirectToAction(nameof(Index));
     }
 }

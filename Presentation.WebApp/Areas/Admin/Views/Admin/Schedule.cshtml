@@ -1,0 +1,14 @@
+@model IReadOnlyList<Domain.Training.TrainingSession>
+
+<section class="form-card">
+    <div class="title">
+        <h3>Schedule</h3>
+        <hr />
+    </div>
+
+    <div class="form-actions">
+        <a class="btn accent" asp-area="Admin" asp-controller="Admin" asp-action="CreateTrainingSession">Create session</a>
+    </div>
+
+    <partial name="Partials/Training/_TrainingSessionScheduleTable" model="Model" />
+</section>

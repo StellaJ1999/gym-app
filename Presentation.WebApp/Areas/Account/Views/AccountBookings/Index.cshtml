@@ -1,0 +1,49 @@
+@model IReadOnlyList<TrainingSessionListItemViewModel>
+
+@{
+    ViewData["Title"] = "My Bookings";
+}
+
+<aside>
+    <div class="profile-image">
+        <img src="~/images/profile-image-avatar.png" alt="user profile image" />
+    </div>
+
+    <nav class="account-options-menu options-menu">
+        <div class="options-menu-title">
+            Menu
+        </div>
+        <ul class="options">
+            <li class="option-item">
+                <a class="option-item-link" asp-area="Account" asp-controller="Account" asp-action="AboutMe">About Me</a>
+            </li>
+            <li class="option-item">
+                <a class="option-item-link" asp-area="Account" asp-controller="AccountMembership" asp-action="Index">My Membership</a>
+            </li>
+            <li class="option-item">
+                <a class="option-item-link" asp-area="Account" asp-controller="AccountBookings" asp-action="Index">My Bookings</a>
+            </li>
+            <li class="option-item">
+                <a class="option-item-link" asp-area="Account" asp-controller="Account" asp-action="SignOut">Sign Out</a>
+            </li>
+        </ul>
+    </nav>
+</aside>
+
+<main>
+    <section class="form-card">
+        <div class="title">
+            <h3>My Bookings</h3>
+            <hr />
+        </div>
+
+        @if (Model is null || Model.Count == 0)
+        {
+            <p>You don’t have any booked training sessions yet.</p>
+        }
+        else
+        {
+            <partial name="Partials/Sections/_TrainingSessionListSection" model="Model" />
+        }
+    </section>
+</main>

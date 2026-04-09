@@ -1,0 +1,41 @@
+@model IReadOnlyList<Domain.Training.TrainingSession>
+
+@if (Model is null || Model.Count == 0)
+{
+    <p>No sessions.</p>
+}
+else
+{
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Max</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var s in Model)
+            {
+                <tr>
+                    <td>@s.Name</td>
+                    <td>@s.StartTime</td>
+                    <td>@s.EndTime</td>
+                    <td>@s.MaxParticipants</td>
+                    <td>
+                        <div class="admin-table__actions">
+                            <a class="btn" asp-area="Admin" asp-controller="Admin" asp-action="EditTrainingSession" asp-route-id="@s.Id">Edit</a>
+
+                            <form asp-area="Admin" asp-controller="Admin" asp-action="DeleteTrainingSession" asp-route-id="@s.Id" method="post" class="admin-table__inline-form">
+                                @Html.AntiForgeryToken()
+                                <button class="btn" type="submit">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

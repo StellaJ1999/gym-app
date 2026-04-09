@@ -2,7 +2,7 @@
 
 public class TrainingSession
 {
-    public Guid id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
     public string Name { get; set; } = null!;
 
     public DateTime Date { get; set; }

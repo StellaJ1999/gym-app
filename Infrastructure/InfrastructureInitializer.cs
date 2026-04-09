@@ -23,8 +23,7 @@ public class InfrastructureInitializer
         // Kör EF migrations mot databasen för aktuell miljö (skapar/uppdaterar tabeller, t.ex. Identity-tabeller).
         var db = scope.ServiceProvider.GetRequiredService<PersistenceContext>();
 
-        // Om databasen är relationsdatabas (t.ex. SQL Server, PostgreSQL) så kör vi EF migrations.
-        //Annars (t.ex. SQLite i minnet) så skapar vi databasen direkt från EF-modellerna.
+        // Om databasen inte finns så skapas den i utvecklingsmiljö, annars körs migreringar (om det inte redan är gjort).
         if (env.IsDevelopment())
         {
             await db.Database.EnsureCreatedAsync();

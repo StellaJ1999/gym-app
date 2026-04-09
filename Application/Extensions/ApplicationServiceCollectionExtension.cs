@@ -1,5 +1,7 @@
 ﻿using Application.Abstractions.Support;
+using Application.Abstractions.Training;
 using Application.Support.Services;
+using Application.Training.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -19,6 +21,8 @@ public static class ApplicationServiceCollectionExtension
         // Utan detta kommer POST att faila eftersom DI inte kan skapa SupportController korrekt.
 
         services.AddScoped<IContactRequestService, ContactRequestService>();
+        services.AddScoped<ITrainingSessionService, TrainingSessionService>();
+        services.AddScoped<ITrainingSessionBookingService, TrainingSessionBookingService>();
 
         return services;
     }

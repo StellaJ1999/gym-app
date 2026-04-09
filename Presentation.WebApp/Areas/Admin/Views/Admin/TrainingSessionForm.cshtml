@@ -1,0 +1,18 @@
+@model Presentation.WebApp.Areas.Admin.Models.TrainingSessionForm
+
+<section class="form-card">
+    <div class="title">
+        <h3>Create session</h3>
+        <hr />
+    </div>
+
+    <form method="post" class="training-session-form" novalidate>
+        @Html.AntiForgeryToken()
+
+        <partial name="Partials/Training/_TrainingSessionFormFields" model="Model" />
+
+        <div class="form-actions">
+            <button class="btn accent" type="submit">Save</button>
+        </div>
+    </form>
+</section>
